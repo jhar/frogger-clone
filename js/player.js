@@ -1,16 +1,16 @@
 // The player class
 var Player = function() {
-    this.x = 101 * 2;
-    this.y = 83 * 5 - 20;
-    this.sprite = 'images/char-boy.png';
+    this.x = 48 * 4;
+    this.y = 48 * 15;
+    this.sprite = 'images/tree-frog.png';
 
     this.update = function() {
         // Checks to see if the player has reached the goal.
         // If they have, they're moved back to the starting
         // position with a win.
-        if (this.y < 63) {
-            this.x = 101 * 2;
-            this.y = 83 * 5 - 20;
+        if (this.y < 48) {
+            this.x = 48 * 4;
+            this.y = 48 * 15;
             console.log("A Winner Is You");
         }
     };
@@ -22,16 +22,16 @@ var Player = function() {
     this.handleInput = function(key) {
         switch(key) {
             case 'left':
-                if (this.x > 0) this.x = this.x - 101;
+                if (this.x > 0) this.x = this.x - 48;
                 break;
             case 'up':
-                if (this.y > 0) this.y = this.y - 83;
+                if (this.y > 0) this.y = this.y - 48;
                 break;
             case 'right':
-                if (this.x < 404) this.x = this.x + 101;
+                if (this.x < 404) this.x = this.x + 48;
                 break;
             case 'down':
-                if (this.y < 395) this.y = this.y + 83;
+                if (this.y < 395) this.y = this.y + 48;
                 break;
             default:
                 break;

@@ -1,11 +1,7 @@
 /* Engine.js
  * Game loop functionality (update entities and render),
  * Draws the initial game board on the screen.
- * Updates and renders player & enemy objects.
- *
- * This engine is available globally via the Engine variable and it also makes
- * the canvas' context (ctx) object globally available to make writing app.js
- * a little simpler to work with.
+ * Updates and renders player & vehicle objects.
  */
 
 var Engine = (function(global) {
@@ -16,13 +12,17 @@ var Engine = (function(global) {
         ctx = canvas.getContext('2d'),
         lastTime;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = 432;
+    canvas.height = 768;
     doc.body.appendChild(canvas);
+
+    // Make canvas context global 
+    global.ctx = ctx;
 
     // Initial setup
     function init() {
         reset();
+        config();
         lastTime = Date.now();
         main();
     }
@@ -47,8 +47,8 @@ var Engine = (function(global) {
     // Update all game objects
     function update(dt) {
         // Update enemies
-        allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
+        allVehicles.forEach(function(vehicle) {
+            vehicle.update(dt);
         });
 
         // Update player
@@ -59,15 +59,25 @@ var Engine = (function(global) {
     function render() {
         // Array for url of image (each row is using the same image)
         var rowImages = [
-                'images/water-block.png',   // Row 1
-                'images/stone-block.png',   // Row 2
-                'images/stone-block.png',   // Row 3
-                'images/stone-block.png',   // Row 4
-                'images/grass-block.png',   // Row 5
-                'images/grass-block.png'    // Row 6
+                'images/grass.png', 
+                'images/grass.png',
+                'images/grass.png',
+                'images/road-top.png',
+                'images/road-bottom.png',       
+                'images/grass.png',
+                'images/road-top.png',
+                'images/road-bottom.png',
+                'images/grass.png',
+                'images/road-top.png',
+                'images/road-bottom.png',
+                'images/grass.png',
+                'images/road-top.png',
+                'images/road-bottom.png',
+                'images/grass.png',
+                'images/grass.png',
             ],
-            numRows = 6,
-            numCols = 5,
+            numRows = 16,
+            numCols = 9,
             row, col;
 
         // Loop through rows and columns drawing images
@@ -75,13 +85,13 @@ var Engine = (function(global) {
             for (col = 0; col < numCols; col++) {
                 // drawImage(image, x coord, y coord)
                 // Using Resources for caching
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                ctx.drawImage(Resources.get(rowImages[row]), col * 48, row * 48);
             }
         }
 
         // Render enemies
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
+        allVehicles.forEach(function(vehicle) {
+            vehicle.render();
         });
 
         // Render player
@@ -95,14 +105,12 @@ var Engine = (function(global) {
 
     // Load all image resources, set init as callback
     Resources.load([
-        'images/stone-block.png',
-        'images/water-block.png',
-        'images/grass-block.png',
-        'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/road-top.png',
+        'images/road-bottom.png',
+        'images/grass.png',
+        'images/tesla.png',
+        'images/tree-frog.png'
     ]);
     Resources.onReady(init);
 
-    // Make canvas context global 
-    global.ctx = ctx;
 })(this);

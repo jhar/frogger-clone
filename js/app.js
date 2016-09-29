@@ -1,5 +1,20 @@
-var allEnemies = [new Enemy(1, 250), new Enemy(2, 500), new Enemy(3, 100)];
-var player = new Player();
+var allVehicles = [];
+var player;
+
+var config = function() {
+	allVehicles = [
+		new Vehicle(3, Math.floor((Math.random() * 400) + 100), false),
+		new Vehicle(4, Math.floor((Math.random() * 400) + 100), true),
+		new Vehicle(6, Math.floor((Math.random() * 400) + 100), false),
+		new Vehicle(7, Math.floor((Math.random() * 400) + 100), true),
+		new Vehicle(9, Math.floor((Math.random() * 400) + 100), false),
+		new Vehicle(10, Math.floor((Math.random() * 400) + 100), true),
+		new Vehicle(12, Math.floor((Math.random() * 400) + 100), false),
+		new Vehicle(13, Math.floor((Math.random() * 400) + 100), true)
+	];
+	
+	player = new Player();
+};
 
 
 // Sends key presses to Player.handleInput() method
