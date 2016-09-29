@@ -28,10 +28,10 @@ var Player = function() {
                 if (this.y > 0) this.y = this.y - 48;
                 break;
             case 'right':
-                if (this.x < 404) this.x = this.x + 48;
+                if (this.x < ctx.canvas.width - 48) this.x = this.x + 48;
                 break;
             case 'down':
-                if (this.y < 395) this.y = this.y + 48;
+                if (this.y < ctx.canvas.height - 48) this.y = this.y + 48;
                 break;
             default:
                 break;
