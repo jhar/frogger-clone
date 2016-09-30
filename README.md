@@ -3,7 +3,9 @@ Frogger Clone
 
 A simple HTML5 canvas based game that mimics that gameplay of the classic arcade game Frogger
 
-To play the game:
+![Live demo](https://justin-harrison.firebaseapp.com/demos/frogger-clone/index.html)
+
+To play the game locally:
 
 * Download all files
 * Load index.html in a browser
