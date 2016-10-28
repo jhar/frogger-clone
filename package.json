@@ -1,0 +1,31 @@
+{
+  "name": "The Frogularity",
+  "version": "0.0.2",
+  "description": "From Teslas to T-1000s, our froggy friend must overcome the rise of the AI and machine intelligence.",
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-stage-2": "^6.17.0",
+    "eslint": "^3.8.1",
+    "isomorphic-fetch": "^2.2.1",
+    "run-sequence": "^1.2.2",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --progress --colors --hot --content-base --config ./webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jhar/frogger-clone"
+  },
+  "author": "Justin A. Harrison",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhar/frogger-clone/issues"
+  },
+  "homepage": "https://github.com/jhar/frogger-clone"
+}
