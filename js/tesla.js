@@ -40,6 +40,7 @@ Tesla.prototype.render = function() {
 }
 
 Tesla.prototype.collision = function (object) {
+    this.midPointX = this.x + this.halfWidth;
     if ((this.y === object.y) &&
         (Math.abs(object.x - this.midPointX) < (this.halfWidth * this.hardness)) &&
         (object.dead === false)) {

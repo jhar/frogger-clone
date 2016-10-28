@@ -8,10 +8,11 @@ var Frog = function(sprite, deathSprite, width, height, respawnTime) {
     self.x = self.width * 4;
     self.y = self.height * 15;
     self.dead = false;
+    self.handlingDeath = false;
 
     // Update
     self.update = function() {
-        if (self.dead) self.handleDeath();
+        if (self.dead && !self.handlingDeath) self.handleDeath();
 
         // Has frogger reached the goal?
         if (self.y < self.height) {
@@ -53,13 +54,14 @@ var Frog = function(sprite, deathSprite, width, height, respawnTime) {
 
     // Handle death
     self.handleDeath = function() {
-        console.log("dead at " + Date.now());
-        setTimeout(self.respawn(), self.respawnTime);
+        self.handlingDeath = true;;
+        setTimeout(self.respawn, self.respawnTime);
     }
 
     // Respawn
     self.respawn = function() {
         self.dead = false;
+        self.handlingDeath = false;
         self.x = self.width * 4;
         self.y = self.height * 15;
     }
