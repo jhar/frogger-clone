@@ -9,7 +9,7 @@ var Vehicle = function(row, speed, right) {
     this.y = 48 * row; 
 
     // The image/sprite for our vehicles
-    this.sprite = 'images/tesla.png';
+    this.sprite = this.right ? 'images/tesla.png' : 'images/tesla-left.png';
 
     // Update the enemy's position,
     this.update = function(dt) {
@@ -37,7 +37,7 @@ var Vehicle = function(row, speed, right) {
         if (this.row === 3) console.log(this.x);
 
         // Checks for collisions with the player
-        if (this.y === player.y && Math.abs(player.x - this.x) < 96) {
+        if (this.y === player.y && Math.abs(player.x - this.x) < 80) {
             player.x = 48 * 4;
             player.y = 48 * 15;
             console.log("All your base are belong to us.");

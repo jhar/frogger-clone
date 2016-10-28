@@ -109,6 +109,7 @@ var Engine = (function(global) {
         'images/road-bottom.png',
         'images/grass.png',
         'images/tesla.png',
+        'images/tesla-left.png',
         'images/tree-frog.png'
     ]);
     Resources.onReady(init);
