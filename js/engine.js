@@ -1,63 +1,52 @@
-/* Engine.js
- * Game loop functionality (update entities and render),
- * Draws the initial game board on the screen.
- * Updates and renders player & vehicle objects.
- */
-
 var Engine = (function(global) {
-    // Predefine variables, create canvas, get 2d context
-    var doc = global.document,
-        win = global.window,
-        canvas = doc.createElement('canvas'),
-        ctx = canvas.getContext('2d'),
-        lastTime;
+    var doc = global.document;
+    var win = global.window;
+    var can = doc.createElement('canvas');
+    var ctx = can.getContext('2d');
+    var prevTime;
 
-    canvas.width = 432;
-    canvas.height = 768;
-    doc.body.appendChild(canvas);
+    can.width = 432;
+    can.height = 768;
+    doc.body.appendChild(can);
 
-    // Make canvas context global 
+    // Make canvas context global
     global.ctx = ctx;
 
     // Initial setup
     function init() {
-        reset();
         config();
-        lastTime = Date.now();
+        prevTime = Date.now();
         main();
     }
 
     // Main method
     function main() {
-        // Get our time delta information
-        var now = Date.now(),
-            dt = (now - lastTime) / 1000.0;
+        // Make time delta
+        var now = Date.now();
+        var dt = (now - prevTime) / 1000.0;
 
         // Update and render the game state
         update(dt);
         render();
 
         // Update for next frame's time delta
-        lastTime = now;
+        prevTime = now;
 
-        // Call this function again as soon as the browser is able
+        // Loop as soon as the browser is able
         win.requestAnimationFrame(main);
     };
 
     // Update all game objects
     function update(dt) {
-        // Update player
-        player.update();
-
-        // Update enemies
-        allVehicles.forEach(function(vehicle) {
-            vehicle.update(dt);
+        frog.update();
+        allTeslas.forEach(function(tesla) {
+            tesla.update(dt);
         });
     }
 
     // Render the game state
     function render() {
-        // Array for url of image (each row is using the same image)
+        // Game backdrop - Each row uses the same image
         var rowImages = [
                 'images/grass.png', 
                 'images/grass.png',
@@ -83,24 +72,14 @@ var Engine = (function(global) {
         // Loop through rows and columns drawing images
         for (row = 0; row < numRows; row++) {
             for (col = 0; col < numCols; col++) {
-                // drawImage(image, x coord, y coord)
-                // Using Resources for caching
                 ctx.drawImage(Resources.get(rowImages[row]), col * 48, row * 48);
             }
         }
 
-        // Render player
-        player.render();
-
-        // Render enemies
-        allVehicles.forEach(function(vehicle) {
-            vehicle.render();
+        frog.render();
+        allTeslas.forEach(function(tesla) {
+            tesla.render();
         });
-    }
-
-    // Could be used to reset states (game menu's, game over screen, etc)
-    function reset() {
-        
     }
 
     // Load all image resources, set init as callback
@@ -108,7 +87,7 @@ var Engine = (function(global) {
         'images/road-top.png',
         'images/road-bottom.png',
         'images/grass.png',
-        'images/tesla.png',
+        'images/tesla-right.png',
         'images/tesla-left.png',
         'images/tree-frog.png',
         'images/tree-frog-dead.png'

@@ -1,30 +1,36 @@
-var allVehicles = [];
-var player;
+var allTeslas = [];
+var frog;
 
 var config = function() {
-	allVehicles = [
-		new Vehicle(3, Math.floor((Math.random() * 400) + 100), false),
-		new Vehicle(4, Math.floor((Math.random() * 400) + 100), true),
-		new Vehicle(6, Math.floor((Math.random() * 400) + 100), false),
-		new Vehicle(7, Math.floor((Math.random() * 400) + 100), true),
-		new Vehicle(9, Math.floor((Math.random() * 400) + 100), false),
-		new Vehicle(10, Math.floor((Math.random() * 400) + 100), true),
-		new Vehicle(12, Math.floor((Math.random() * 400) + 100), false),
-		new Vehicle(13, Math.floor((Math.random() * 400) + 100), true)
+    var sr = 'images/tesla-right.png'; // Right facing sprite
+    var sl = 'images/tesla-left.png'; // Left facing sprite
+    var w = 96; // Sprite width
+    var h = 48; // Sprite height
+    var u = 400; // Speed upper bound
+    var l = 100; // Speed lower bound
+    var d = 0.93; // "Hardness" of Tesla - how much contact will kill frog
+
+	allTeslas = [
+		new Tesla(sl, 3, false, w, h, u, l, d),
+		new Tesla(sr, 4, true, w, h, u, l, d),
+		new Tesla(sl, 6, false, w, h, u, l, d),
+		new Tesla(sr, 7, true, w, h, u, l, d),
+		new Tesla(sl, 9, false, w, h, u, l, d),
+		new Tesla(sr, 10, true, w, h, u, l, d),
+		new Tesla(sl, 12, false, w, h, u, l, d),
+		new Tesla(sr, 13, true, w, h, u, l, d)
 	];
 	
-	player = new Player();
+	frog = new Frog('images/tree-frog.png', 'images/tree-frog-dead.png', 48, 48, 2500);
 };
 
-
-// Sends key presses to Player.handleInput() method
-document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+document.addEventListener('keyup', function bindControls(e) {
+    var keys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
     };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    frog.handleInput(keys[e.keyCode]);
 });
