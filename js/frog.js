@@ -1,5 +1,6 @@
-var Frog = function(sprite, deathSprite, width, height, respawnTime) {
+var Frog = function(engine, sprite, deathSprite, width, height, respawnTime) {
     var self = this;
+    self.engine = engine;
     self.sprite = sprite;
     self.deathSprite = deathSprite;
     self.width = width;
@@ -9,6 +10,12 @@ var Frog = function(sprite, deathSprite, width, height, respawnTime) {
     self.y = self.height * 15;
     self.dead = false;
     self.handlingDeath = false;
+    self.keys = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down'
+    }
 
     // Update
     self.update = function() {
@@ -24,14 +31,19 @@ var Frog = function(sprite, deathSprite, width, height, respawnTime) {
     // Render
     self.render = function() {
         if (self.dead !== true) {
-            ctx.drawImage(Resources.get(self.sprite), self.x, self.y);
+            self.engine.ctx.drawImage(Resources.get(self.sprite), self.x, self.y);
         } else {
-            ctx.drawImage(Resources.get(self.deathSprite), self.x, self.y);
+            self.engine.ctx.drawImage(Resources.get(self.deathSprite), self.x, self.y);
         }
     }
-    
-    // Controls
-    self.handleInput = function(key) {
+
+    // Event listener for keyboard input
+    document.addEventListener('keyup', function(e) {
+        self.handleControls(self.keys[e.keyCode]);
+    });
+
+    // Handle controls
+    self.handleControls = function(key) {
         if (self.dead !== true) {
             switch(key) {
                 case 'left':
@@ -41,10 +53,10 @@ var Frog = function(sprite, deathSprite, width, height, respawnTime) {
                     if (self.y > 0) self.y = self.y - self.height;
                     break;
                 case 'right':
-                    if (self.x < ctx.canvas.width - self.width) self.x = self.x + self.width;
+                    if (self.x < self.engine.ctx.canvas.width - self.width) self.x = self.x + self.width;
                     break;
                 case 'down':
-                    if (self.y < ctx.canvas.height - self.height) self.y = self.y + self.height;
+                    if (self.y < self.engine.ctx.canvas.height - self.height) self.y = self.y + self.height;
                     break;
                 default:
                     break;

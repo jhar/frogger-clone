@@ -1,4 +1,5 @@
-var Tesla = function(sprite, row, right, width, height, upper, lower, hardness) {
+var Tesla = function(engine, sprite, row, right, width, height, upper, lower, hardness) {
+    this.engine = engine;
     this.sprite = sprite;
     this.row = row;
     this.right = right;
@@ -7,7 +8,7 @@ var Tesla = function(sprite, row, right, width, height, upper, lower, hardness) 
     this.speedUpperBound = upper;
     this.speedLowerBound = lower;
     this.hardness = hardness; 
-    this.x = this.right ? -this.width : ctx.canvas.width + this.width;
+    this.x = this.right ? -this.width : this.engine.ctx.canvas.width + this.width;
     this.y = this.height * row;
     this.halfWidth = this.width/2;
     this.midPointX = this.x + this.halfWidth;
@@ -18,7 +19,7 @@ Tesla.prototype.update = function(dt) {
     if (this.right) { // Tesla is moving right
         this.x += this.speed * dt;
         // Check if it has left the screen
-        if (this.x > ctx.canvas.width) {
+        if (this.x > this.engine.ctx.canvas.width) {
             this.speed = this.randomSpeed();
             this.x = -this.width;
         }
@@ -27,16 +28,16 @@ Tesla.prototype.update = function(dt) {
         // Check if it has left the screen
         if (this.x < -this.width) {
             this.speed = this.randomSpeed();
-            this.x = ctx.canvas.width + this.width;
+            this.x = this.engine.ctx.canvas.width + this.width;
         }
     }
 
     // Run over the frog
-    if (this.collision(frog)) this.kill(frog);
+    if (this.collision(this.engine.frog)) this.kill(this.engine.frog);
 }
 
 Tesla.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    this.engine.ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
 Tesla.prototype.collision = function (object) {

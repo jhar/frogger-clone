@@ -1,97 +1,56 @@
-var Engine = (function(global) {
-    var doc = global.document;
-    var win = global.window;
-    var can = doc.createElement('canvas');
-    var ctx = can.getContext('2d');
-    var prevTime;
+var Engine = function(global, width, height, setup, update, render, preload) {
+    this.doc = global.document;
+    this.win = global.window;
+    this.canvas = this.doc.createElement('canvas');
+    this.ctx = this.canvas.getContext('2d');
+    this.canvas.width = width;
+    this.canvas.height = height;
+    this.doc.body.appendChild(this.canvas);
+    this.prevTime;
+    
+    // Game functions
+    this.setup = (typeof setup === 'function') ? setup.bind(this) : null;
+    this.update = (typeof update === 'function') ? update.bind(this) : null;
+    this.render = (typeof render === 'function') ? render.bind(this) : null;
+    this.preload = (typeof preload === 'function') ? preload.bind(this) : null;
 
-    can.width = 432;
-    can.height = 768;
-    doc.body.appendChild(can);
-
-    // Make canvas context global
-    global.ctx = ctx;
-
-    // Initial setup
-    function init() {
-        config();
-        prevTime = Date.now();
-        main();
+    // Start your engine
+    this.start = function() {
+        // Call preload if it was given
+        var cb = this.preloadCb.bind(this);
+        if (this.preload !== null) {
+            this.preload(cb);
+        } else {
+            // Else skip it
+            cb();
+        }
     }
 
-    // Main method
-    function main() {
+    // Main loop
+    this.loop = function() {
         // Make time delta
         var now = Date.now();
-        var dt = (now - prevTime) / 1000.0;
+        var dt = (now - this.prevTime) / 1000.0;
 
         // Update and render the game state
-        update(dt);
-        render();
+        this.update(dt);
+        this.render();
 
         // Update for next frame's time delta
-        prevTime = now;
+        this.prevTime = now;
 
         // Loop as soon as the browser is able
-        win.requestAnimationFrame(main);
-    };
-
-    // Update all game objects
-    function update(dt) {
-        frog.update();
-        allTeslas.forEach(function(tesla) {
-            tesla.update(dt);
-        });
+        this.win.requestAnimationFrame(this.loop.bind(this));
     }
 
-    // Render the game state
-    function render() {
-        // Game backdrop - Each row uses the same image
-        var rowImages = [
-                'images/grass.png', 
-                'images/grass.png',
-                'images/grass.png',
-                'images/road-top.png',
-                'images/road-bottom.png',       
-                'images/grass.png',
-                'images/road-top.png',
-                'images/road-bottom.png',
-                'images/grass.png',
-                'images/road-top.png',
-                'images/road-bottom.png',
-                'images/grass.png',
-                'images/road-top.png',
-                'images/road-bottom.png',
-                'images/grass.png',
-                'images/grass.png',
-            ],
-            numRows = 16,
-            numCols = 9,
-            row, col;
-
-        // Loop through rows and columns drawing images
-        for (row = 0; row < numRows; row++) {
-            for (col = 0; col < numCols; col++) {
-                ctx.drawImage(Resources.get(rowImages[row]), col * 48, row * 48);
-            }
-        }
-
-        frog.render();
-        allTeslas.forEach(function(tesla) {
-            tesla.render();
-        });
+    // Preload callback
+    this.preloadCb = function() {
+        this.setup(this.setupCb.bind(this));
     }
 
-    // Load all image resources, set init as callback
-    Resources.load([
-        'images/road-top.png',
-        'images/road-bottom.png',
-        'images/grass.png',
-        'images/tesla-right.png',
-        'images/tesla-left.png',
-        'images/tree-frog.png',
-        'images/tree-frog-dead.png'
-    ]);
-    Resources.onReady(init);
-
-})(this);
+    // Setup callback
+    this.setupCb = function() {
+        this.prevTime = Date.now();
+        this.loop();
+    }
+}

@@ -37,7 +37,7 @@
                 }
             };
 
-            // Set initial cache value to false, this will change when
+            // Set initial cache value to false
             resourceCache[url] = false;
             
             // Set image src to passed in URL
