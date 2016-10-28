@@ -11,7 +11,6 @@ var Player = function() {
         if (this.y < 48) {
             this.x = 48 * 4;
             this.y = 48 * 15;
-            console.log("A Winner Is You");
         }
     };
 

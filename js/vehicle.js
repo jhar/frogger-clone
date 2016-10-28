@@ -38,9 +38,12 @@ var Vehicle = function(row, speed, right) {
 
         // Checks for collisions with the player
         if (this.y === player.y && Math.abs(player.x - this.x) < 80) {
-            player.x = 48 * 4;
-            player.y = 48 * 15;
-            console.log("All your base are belong to us.");
+            player.sprite = 'images/tree-frog-dead.png';
+            setTimeout(function() {
+                player.x = 48 * 4;
+                player.y = 48 * 15;
+                player.sprite = 'images/tree-frog.png';
+            }, 2500);
         }
     }
 

@@ -46,13 +46,13 @@ var Engine = (function(global) {
 
     // Update all game objects
     function update(dt) {
+        // Update player
+        player.update();
+
         // Update enemies
         allVehicles.forEach(function(vehicle) {
             vehicle.update(dt);
         });
-
-        // Update player
-        player.update();
     }
 
     // Render the game state
@@ -89,13 +89,13 @@ var Engine = (function(global) {
             }
         }
 
+        // Render player
+        player.render();
+
         // Render enemies
         allVehicles.forEach(function(vehicle) {
             vehicle.render();
         });
-
-        // Render player
-        player.render();
     }
 
     // Could be used to reset states (game menu's, game over screen, etc)
@@ -110,7 +110,8 @@ var Engine = (function(global) {
         'images/grass.png',
         'images/tesla.png',
         'images/tesla-left.png',
-        'images/tree-frog.png'
+        'images/tree-frog.png',
+        'images/tree-frog-dead.png'
     ]);
     Resources.onReady(init);
 
