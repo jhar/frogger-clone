@@ -1,3 +1,4 @@
-import engine from './engine.js'
+import engine from './engine'
+import assets from './assets'
 
-export default engine
+export { engine, assets }

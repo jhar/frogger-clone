@@ -1,4 +1,4 @@
-/** 
+/**
  * Background of Scene 1.
  *
  * @param {object} engine - Context for game engine.
@@ -7,7 +7,7 @@
  * @param {number} rows - Number of rows in game grid.
  * @param {number} cols - Number of columns in game grid.
  * @param {array} sprites - Array of URLs to cached images.
- * @return
+ * @return {object}
  */
 
 const background = (_engine, _rowHeight, _colWidth, _rows, _cols, _sprites) => {
@@ -19,7 +19,7 @@ const background = (_engine, _rowHeight, _colWidth, _rows, _cols, _sprites) => {
     const sprites = _sprites
 
     return {
-        render: () => {
+        render: function() {
             let row, col, sprite, x, y
 
             /* Loop through rows and columns drawing sprites */

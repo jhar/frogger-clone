@@ -1,3 +1,4 @@
+import assets from '../../../engine/assets'
 import background from './entities/background'
 import frog from './entities/frog'
 import tesla from './entities/tesla'
@@ -9,17 +10,18 @@ import tesla from './entities/tesla'
  * @return {void}
  */
 
+const imageAssets = assets()
 const preload = (callback) => {
-    Resources.load([
-        'images/road-top.png',
-        'images/road-bottom.png',
-        'images/grass.png',
-        'images/tesla-right.png',
-        'images/tesla-left.png',
-        'images/tree-frog.png',
-        'images/tree-frog-dead.png'
-    ]);
-    Resources.onReady(callback)
+    imageAssets.load([
+        'sprites/road-top.png',
+        'sprites/road-bottom.png',
+        'sprites/grass.png',
+        'sprites/tesla-right.png',
+        'sprites/tesla-left.png',
+        'sprites/tree-frog.png',
+        'sprites/tree-frog-dead.png'
+    ])
+    imageAssets.onReady(callback)
 }
 
 /**
@@ -40,30 +42,30 @@ const setup = (callback) => {
 
     /* Each sprite is a single row of the background */
     const sprites = [
-        'images/grass.png', 
-        'images/grass.png',
-        'images/grass.png',
-        'images/road-top.png',
-        'images/road-bottom.png',       
-        'images/grass.png',
-        'images/road-top.png',
-        'images/road-bottom.png',
-        'images/grass.png',
-        'images/road-top.png',
-        'images/road-bottom.png',
-        'images/grass.png',
-        'images/road-top.png',
-        'images/road-bottom.png',
-        'images/grass.png',
-        'images/grass.png',
+        'sprites/grass.png',
+        'sprites/grass.png',
+        'sprites/grass.png',
+        'sprites/road-top.png',
+        'sprites/road-bottom.png',
+        'sprites/grass.png',
+        'sprites/road-top.png',
+        'sprites/road-bottom.png',
+        'sprites/grass.png',
+        'sprites/road-top.png',
+        'sprites/road-bottom.png',
+        'sprites/grass.png',
+        'sprites/road-top.png',
+        'sprites/road-bottom.png',
+        'sprites/grass.png',
+        'sprites/grass.png'
     ]
 
     /* Create Background */
-    const background = new Background(engine, rowHeight, colWidth, rows, cols, sprites)
+    const background = background(engine, rowHeight, colWidth, rows, cols, sprites)
 
     /* Tesla variables */
-    const sr = 'images/tesla-right.png' // Right facing sprite
-    const sl = 'images/tesla-left.png' // Left facing sprite
+    const sr = 'sprites/tesla-right.png' // Right facing sprite
+    const sl = 'sprites/tesla-left.png' // Left facing sprite
     const w = 96 // Sprite width
     const h = 48 // Sprite height
     const u = 400 // Speed upper bound
@@ -72,25 +74,25 @@ const setup = (callback) => {
 
     /* Create Teslas */
     const allTeslas = [
-        new Tesla(eng, sl, 3, false, w, h, u, l, d),
-        new Tesla(eng, sr, 4, true, w, h, u, l, d),
-        new Tesla(eng, sl, 6, false, w, h, u, l, d),
-        new Tesla(eng, sr, 7, true, w, h, u, l, d),
-        new Tesla(eng, sl, 9, false, w, h, u, l, d),
-        new Tesla(eng, sr, 10, true, w, h, u, l, d),
-        new Tesla(eng, sl, 12, false, w, h, u, l, d),
-        new Tesla(eng, sr, 13, true, w, h, u, l, d)
+        tesla(engine, sl, 3, false, w, h, u, l, d),
+        tesla(engine, sr, 4, true, w, h, u, l, d),
+        tesla(engine, sl, 6, false, w, h, u, l, d),
+        tesla(engine, sr, 7, true, w, h, u, l, d),
+        tesla(engine, sl, 9, false, w, h, u, l, d),
+        tesla(engine, sr, 10, true, w, h, u, l, d),
+        tesla(engine, sl, 12, false, w, h, u, l, d),
+        tesla(engine, sr, 13, true, w, h, u, l, d)
     ]
-    
+
     /* Frog variables */
-    const liveSprite = 'images/tree-frog.png';
-    const deadSprite = 'images/tree-frog-dead.png';
+    const liveSprite = 'sprites/tree-frog.png';
+    const deadSprite = 'sprites/tree-frog-dead.png';
     const frogWidth = 48;
     const frogHeight = 48;
     const respawnTime = 2500;
 
     /* Create frog */
-    const frog = new Frog(engine, liveSprite, deadSprite, frogWidth, frogHeight, respawnTime);
+    const frog = frog(engine, liveSprite, deadSprite, frogWidth, frogHeight, respawnTime)
 
     /* Advance to loop */
     callBack()

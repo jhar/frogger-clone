@@ -23,7 +23,7 @@ const frog = (_engine, _sprite, _deathSprite, _width, _height, _respawnTime) => 
     })
 
     return {
-        update: () => {
+        update: function() {
             if (dead && !handlingDeath) handleDeath()
 
             /* Check if frog has reached goal */
@@ -33,7 +33,7 @@ const frog = (_engine, _sprite, _deathSprite, _width, _height, _respawnTime) => 
             }
         },
 
-        render: () => {
+        render: function() {
             if (dead !== true) {
                 engine.ctx.drawImage(Resources.get(sprite), x, y)
             } else {
@@ -41,7 +41,7 @@ const frog = (_engine, _sprite, _deathSprite, _width, _height, _respawnTime) => 
             }
         },
 
-        handleControls: (key) => {
+        handleControls: function(key) {
             if (dead !== true) {
                 switch(key) {
                     case 'left':
@@ -62,12 +62,12 @@ const frog = (_engine, _sprite, _deathSprite, _width, _height, _respawnTime) => 
             }
         },
 
-        handleDeath: () => {
+        handleDeath: function() {
             handlingDeath = true
             setTimeout(respawn, respawnTime)
         },
 
-        respawn: () => {
+        respawn: function() {
             dead = false
             handlingDeath = false
             x = width * 4
