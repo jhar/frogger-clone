@@ -1,19 +1,24 @@
-const frog = (_engine, _sprite, _deathSprite, _width, _height, _respawnTime) => {
-    const engine = _engine
-    const sprite = _sprite
-    const deathSprite = _deathSprite
-    const width = _width
-    const height = _height
-    const respawnTime = _respawnTime
-    const keys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    }
+import { get } from '../../engine/images'
+import {
+    ROWS,
+    COLUMNS,
+    CANVAS_WIDTH,
+    CONTEXT,
+    KEYS
+} from '../../constants'
+import {
+    FROG_ALIVE,
+    FROG_DEAD,
+    FROG_WIDTH,
+    FROG_HEIGHT,
+    FROG_RESPAWN_TIME,
+    FROG_START_X,
+    FROG_START_Y
+} from './constants'
 
-    let x = self.width * 4
-    let y = self.height * 15
+export default function frog_factory() {
+    let x = FROG_START_X
+    let y = FROG_START_Y
     let dead = false
     let handlingDeath = false
 
@@ -27,17 +32,17 @@ const frog = (_engine, _sprite, _deathSprite, _width, _height, _respawnTime) => 
             if (dead && !handlingDeath) handleDeath()
 
             /* Check if frog has reached goal */
-            if (y < height) {
-                x = width * 4
-                y = height * 15
+            if (y < FROG_HEIGHT) {
+                x = FROG_START_X
+                y = FROG_START_Y
             }
         },
 
         render: function() {
             if (dead !== true) {
-                engine.ctx.drawImage(Resources.get(sprite), x, y)
+                CONTEXT.drawImage(get(FROG_ALIVE), x, y)
             } else {
-                engine.ctx.drawImage(Resources.get(deathSprite), x, y)
+                CONTEXT.drawImage(get(FROG_DEAD), x, y)
             }
         },
 
@@ -45,16 +50,16 @@ const frog = (_engine, _sprite, _deathSprite, _width, _height, _respawnTime) => 
             if (dead !== true) {
                 switch(key) {
                     case 'left':
-                        if (x > 0) x = x - width
+                        if (x > 0) x = x - CANVAS_WIDTH
                         break
                     case 'up':
-                        if (y > 0) y = y - height
+                        if (y > 0) y = y - CANVAS_HEIGHT
                         break
                     case 'right':
-                        if (x < engine.ctx.canvas.width - width) x = x + width
+                        if (x < CANVAS_WIDTH - FROG_WIDTH) x = x + FROG_WIDTH
                         break
                     case 'down':
-                        if (y < engine.ctx.canvas.height - height) y = y + height;
+                        if (y < CANVAS_HEIGHT - FROG_HEIGHT) y = y + FROG_HEIGHT
                         break
                     default:
                         break
@@ -64,16 +69,14 @@ const frog = (_engine, _sprite, _deathSprite, _width, _height, _respawnTime) => 
 
         handleDeath: function() {
             handlingDeath = true
-            setTimeout(respawn, respawnTime)
+            setTimeout(respawn, FROG_RESPAWN_TIME)
         },
 
         respawn: function() {
             dead = false
             handlingDeath = false
-            x = width * 4
-            y = height * 15
+            x = FROG_START_X
+            y = FROG_START_Y
         }
     }
 }
-
-export default frog

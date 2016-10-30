@@ -1,5 +1,5 @@
 module.exports = {
-	entry: ['babel-polyfill', 'isomorphic-fetch', './src/index.js'],
+	entry: ['babel-polyfill', 'isomorphic-fetch', './src/game.js'],
 	output: {
 		path: __dirname + '/dist/',
 		publicPath: 'dist/',
