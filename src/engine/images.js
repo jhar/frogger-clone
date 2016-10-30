@@ -12,7 +12,7 @@ const imgCache = {}
  *
  * @param {array} array - Array of URLs for images to cache
  */
-const loadImages = function(array) {
+export function loadImages(array) {
     let promises = []
     array.forEach((url) => {
         promises.push(loadImage(url))
@@ -39,9 +39,7 @@ const loadImage = function(url) {
  * @param {string} url - URL of image requested
  * @return {object} img - Reference to cached image
  */
-const get = function(url) {
+export function get(url) {
     let img = imgCache[url]
     return img
 }
-
-export { loadImages, get }

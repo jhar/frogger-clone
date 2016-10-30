@@ -8,7 +8,7 @@
  * @param {array} renders - Array of objects to render
  */
 
-const loop = function(prevTime, updates, renders) {
+export default function loop(prevTime, updates, renders) {
     /* Make time delta */
     const now = Date.now()
     const dt = (now - prevTime) / 1000.0
@@ -28,5 +28,3 @@ const loop = function(prevTime, updates, renders) {
         loop(now, updates, renders)
     })
 }
-
-export default loop

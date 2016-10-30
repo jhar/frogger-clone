@@ -1,7 +1,9 @@
 import { get } from '../../engine/images'
+import { subscribe } from '../../engine/eventBus'
 import {
     ROWS,
     COLUMNS,
+    CANVAS_HEIGHT,
     CANVAS_WIDTH,
     CONTEXT,
     KEYS
@@ -22,12 +24,7 @@ export default function frog_factory() {
     let dead = false
     let handlingDeath = false
 
-    /* Event listener for keyboard input */
-    document.addEventListener('keyup', (e) => {
-        handleControls(keys[e.keyCode]);
-    })
-
-    return {
+    const frog = {
         update: function() {
             if (dead && !handlingDeath) handleDeath()
 
@@ -46,25 +43,20 @@ export default function frog_factory() {
             }
         },
 
-        handleControls: function(key) {
-            if (dead !== true) {
-                switch(key) {
-                    case 'left':
-                        if (x > 0) x = x - CANVAS_WIDTH
-                        break
-                    case 'up':
-                        if (y > 0) y = y - CANVAS_HEIGHT
-                        break
-                    case 'right':
-                        if (x < CANVAS_WIDTH - FROG_WIDTH) x = x + FROG_WIDTH
-                        break
-                    case 'down':
-                        if (y < CANVAS_HEIGHT - FROG_HEIGHT) y = y + FROG_HEIGHT
-                        break
-                    default:
-                        break
-                }
-            }
+        moveLeft: function() {
+            if (!dead && (x > 0)) x = x - FROG_WIDTH
+        },
+
+        moveUp: function() {
+            if (!dead && (y > 0)) y = y - FROG_HEIGHT
+        },
+
+        moveRight: function() {
+            if (!dead && (x < CANVAS_WIDTH - FROG_WIDTH)) x = x + FROG_WIDTH
+        },
+
+        moveDown: function() {
+            if (!dead && (y < CANVAS_HEIGHT - FROG_HEIGHT)) y = y + FROG_HEIGHT
         },
 
         handleDeath: function() {
@@ -79,4 +71,12 @@ export default function frog_factory() {
             y = FROG_START_Y
         }
     }
+
+    /* Subscribe frog to events */
+    subscribe('LEFT', frog, frog.moveLeft)
+    subscribe('UP', frog, frog.moveUp)
+    subscribe('RIGHT', frog, frog.moveRight)
+    subscribe('DOWN', frog, frog.moveDown)
+
+    return frog
 }

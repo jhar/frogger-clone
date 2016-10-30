@@ -8,9 +8,9 @@ export const CANVAS = document.createElement('canvas')
 export const CONTEXT = CANVAS.getContext('2d')
 
 /* Input */
-export const KEYS = {
-    37: 'left',
-    38: 'up',
-    39: 'right',
-    40: 'down'
+export const KEY_UP_VALUES = {
+    37: 'LEFT',
+    38: 'UP',
+    39: 'RIGHT',
+    40: 'DOWN'
 }
