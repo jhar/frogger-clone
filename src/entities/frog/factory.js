@@ -3,8 +3,8 @@ import { subscribe } from '../../engine/eventBus'
 import {
     ROWS,
     COLUMNS,
-    CANVAS_HEIGHT,
     CANVAS_WIDTH,
+    CANVAS_HEIGHT,
     CONTEXT,
     KEYS
 } from '../../constants'
@@ -13,9 +13,9 @@ import {
     FROG_DEAD,
     FROG_WIDTH,
     FROG_HEIGHT,
-    FROG_RESPAWN_TIME,
     FROG_START_X,
-    FROG_START_Y
+    FROG_START_Y,
+    FROG_RESPAWN_TIME
 } from './constants'
 
 export default function frog_factory() {
@@ -25,9 +25,19 @@ export default function frog_factory() {
     let handlingDeath = false
 
     const frog = {
-        update: function() {
-            if (dead && !handlingDeath) handleDeath()
+        get x() {
+            return x
+        },
 
+        get y() {
+            return y
+        },
+
+        get dead() {
+            return dead
+        },
+
+        update: function() {
             /* Check if frog has reached goal */
             if (y < FROG_HEIGHT) {
                 x = FROG_START_X
@@ -60,15 +70,14 @@ export default function frog_factory() {
         },
 
         handleDeath: function() {
+            dead = true
             handlingDeath = true
-            setTimeout(respawn, FROG_RESPAWN_TIME)
-        },
-
-        respawn: function() {
-            dead = false
-            handlingDeath = false
-            x = FROG_START_X
-            y = FROG_START_Y
+            setTimeout(() => {
+                dead = false
+                handlingDeath = false
+                x = FROG_START_X
+                y = FROG_START_Y
+            }, FROG_RESPAWN_TIME)
         }
     }
 
@@ -77,6 +86,7 @@ export default function frog_factory() {
     subscribe('UP', frog, frog.moveUp)
     subscribe('RIGHT', frog, frog.moveRight)
     subscribe('DOWN', frog, frog.moveDown)
+    subscribe('COLLISION', frog, frog.handleDeath)
 
     return frog
 }

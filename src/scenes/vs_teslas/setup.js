@@ -6,8 +6,9 @@ import {
     TESLA_ROWS,
 } from './entities/tesla/constants'
 import tesla_factory from './entities/tesla/factory'
+import collision_detector_factory from './entities/collision_detector/factory'
 
-/* Configure and create teslas */
+/* Configure and create remaining entities */
 export default function setup() {
     /* Generate teslas */
     let teslas = []
@@ -25,5 +26,8 @@ export default function setup() {
         teslas.push(tesla)
     }
 
-    return teslas
+    /* Generate collision detector */
+    let collision_detector = collision_detector_factory(teslas)
+
+    return [teslas, collision_detector]
 }

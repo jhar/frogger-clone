@@ -15,7 +15,6 @@ document.body.appendChild(CANVAS)
 /* Initialize the keyboard configuration */
 keyup(KEY_UP_VALUES)
 
-// Custom event wrapper functions (engine), used in scenes & entities
 // Scene manager (engine), transitions, started stopped by custom events
 // Maybe write a vector class
 
